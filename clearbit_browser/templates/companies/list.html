@@ -1,0 +1,40 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<br/><p>List of companies you've added</p>
+
+<div class="container">
+{% for company in company_list %}
+<div class="jumbotron">
+    <h1>{{ company.name }}
+        <a href="https://{{ company.domain }}">
+            <img src="{{ company.logo_url }}" height="42" width="42" />
+        </a>
+    </h1>
+    <p>
+        {% if company.linkedin_handle %}
+        <a href="https://linkedin.com/{{ company.linkedin_handle }}">
+            <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/square-linkedin-256.png" height="42" width="42" />
+        </a> {% endif %} {% if company.facebook_handle %}
+        <a href="https://facebook.com/{{ company.facebook_handle }}">
+            <img src="http://icons.iconarchive.com/icons/danleech/simple/256/facebook-icon.png" height="42" width="42" />
+        </a> {% endif %} {% if company.twitter_handle %}
+        <a href="https://twitter.com/{{ company.twitter_handle }}">
+            <img src="http://icons.iconarchive.com/icons/limav/flat-gradient-social/128/Twitter-icon.png" height="42" width="42" />
+        </a> {% endif %}
+    </p>
+    <p>
+        {{ company.description }}
+        <br/> Last updated at: {{ company.updated_at|date:"D d M Y" }}
+    </p>
+    <p>
+        {% if company.phone_numbers %}Phone numbers: {{ company.phone_numbers }} {% endif %}
+        {% if company.email_addresses %}Email addresses: {{ company.email_addresses }} {% endif %}
+        {% if company.phone %} Phone: {{ company.phone}} {% endif %}
+    </p>
+    <br/>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+<br/>
+<p>
+  <p>Search for companies here (use domain such as "uber.com" for Uber)</p>
+
+  <form id="companysearch" action={% url 'companies:company_search' %} method='post' accept-charset="utf-8">
+    {% csrf_token %}
+    <input class="searchfield" id="searchbox" name="search_query" type="text" placeholder="Search">
+    <button class="btn btn-info" type="submit">
+      <i class="fa fa-search">Search</i>
+    </button>
+  </form>
+</p>
+
+{% endblock content %}

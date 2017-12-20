@@ -1,0 +1,5 @@
+[run]
+include = clearbit_browser/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin

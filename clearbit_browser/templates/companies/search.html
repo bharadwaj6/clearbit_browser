@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block content %} <br/> <p>Search for companies here (use domain such as "uber.com" for Uber)</p>
+
+<form id="companysearch" action={% url 'companies:company_search' %} method='post' accept-charset="utf-8">
+  {% csrf_token %}
+  <input class="searchfield" id="searchbox" name="search_query" type="text" placeholder="Search">
+<button class="btn btn-info" type="submit">
+    <i class="fa fa-search">Search</i>
+</button>
+</form>
+
+{% if company_details %}
+<div class="container">
+    <div class="jumbotron">
+        <h1>{{ company_details.name }} <a href="https://{{ company_details.domain }}"><img src="{{ company_details.logo }}" height="42" width="42" /></a></h1>
+        <p>
+            {% if company_details.linkedin_handle %}
+            <a href="https://linkedin.com/{{ company_details.linkedin_handle }}">
+                <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/square-linkedin-256.png" height="42" width="42" />
+            </a> {% endif %}
+             {% if company_details.facebook_handle %}
+            <a href="https://facebook.com/{{ company_details.facebook_handle }}">
+                <img src="http://icons.iconarchive.com/icons/danleech/simple/256/facebook-icon.png" height="42" width="42" />
+            </a> {% endif %}
+             {% if company_details.twitter_handle %}
+            <a href="https://twitter.com/{{ company_details.twitter_handle }}">
+                <img src="http://icons.iconarchive.com/icons/limav/flat-gradient-social/128/Twitter-icon.png" height="42" width="42" />
+            </a> {% endif %}
+        </p>
+        <p>
+            {{ company_details.description }}
+            <br/> Industry: {{ company_details.industry }}
+            <br/> Tech stack: {% for tech in company_details.tech %}{{ tech }}{%if not forloop.last%},{%endif%} {% endfor %}
+            <br/> Last updated at: {{ company_details.indexed_at|date:"D d M Y" }}
+        </p>
+        <p>
+            {% if company_details.phone_numbers %}
+             Phone numbers: {% for number in company_details.phone_numbers %}{{ number }}{%if not forloop.last%},{%endif%} {% endfor %}
+            {% endif %} <br>
+            {% if company_details.email_addresses %}
+            Email addresses: {% for email in company_details.email_addresses %}{{ email }}{%if not forloop.last%},{%endif%} {% endfor %}
+            {% endif %}
+        </p>
+        <br/>
+        <form id="company_add" action={% url 'companies:company_list' %} method='post' accept-charset="utf-8">
+             {% csrf_token %}
+            <input type="hidden" name="clearbit_id" value="{{ company_details.clearbit_id }}">
+            <button type='submit' class="btn btn-info" id="company_id">Add to List</button>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}
