@@ -125,14 +125,17 @@ LOGGING = {
     },
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s '
-                      '%(process)d %(thread)d %(message)s'
+            'format':
+            '%(levelname)s %(asctime)s %(module)s '
+            '%(process)d %(thread)d %(message)s'
         },
     },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
-            'filters': ['require_debug_false', ],
+            'filters': [
+                'require_debug_false',
+            ],
             'class': 'django.utils.log.AdminEmailHandler'
         },
         'console': {
@@ -143,13 +146,22 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins', ],
+            'handlers': [
+                'mail_admins',
+            ],
             'level': 'ERROR',
             'propagate': True
         },
+        'django': {
+            'handlers': ['console'],
+            'level': env('DJANGO_LOG_LEVEL'),
+        },
         'django.security.DisallowedHost': {
             'level': 'ERROR',
-            'handlers': ['console', 'mail_admins', ],
+            'handlers': [
+                'console',
+                'mail_admins',
+            ],
             'propagate': True
         }
     }
