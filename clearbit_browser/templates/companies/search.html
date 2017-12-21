@@ -44,7 +44,7 @@
         <form id="company_add" action={% url 'companies:company_list' %} method='post' accept-charset="utf-8">
              {% csrf_token %}
             <input type="hidden" name="clearbit_id" value="{{ company_details.clearbit_id }}">
-            <button type='submit' class="btn btn-info" id="company_id">Add to List</button>
+            <button type='submit' class="btn btn-primary" id="company_id">Add to List</button>
         </form>
     </div>
 </div>

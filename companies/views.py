@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
 from django.db import transaction, IntegrityError
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, View
+from django.views.generic import ListView, View, DeleteView
 
 from third_parties.clearbit_wrapper import ClearbitCompanySearch
 
@@ -51,6 +52,12 @@ class CompanyAddedView(ListView):
         return render(request, self.template_name, {
             'company_list': self.get_queryset()
         })
+
+
+@method_decorator(login_required, name='dispatch')
+class CompanyDeleteView(DeleteView):
+    model = Company
+    success_url = reverse_lazy('companies:company_list')
 
 
 class CompanySearchView(View):

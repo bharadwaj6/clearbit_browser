@@ -1,7 +1,11 @@
 {% extends "base.html" %} 
 
 {% block content %}
+{% if company_list %}
 <br/><p>List of companies you've added</p>
+{% else %}
+<p>Your companies list is empty.</p>
+{% endif %}
 
 <div class="container">
 {% for company in company_list %}
@@ -33,6 +37,11 @@
         {% if company.phone %} Phone: {{ company.phone}} {% endif %}
     </p>
     <br/>
+    <form id="company_delete" action={% url 'companies:company_delete' company.id %} method='post' accept-charset="utf-8">
+        {% csrf_token %}
+        <input type="hidden" name="clearbit_id" value="{{ company.clearbit_id }}">
+        <button type='submit' class="btn btn-danger" id="company_id">Delete from list</button>
+    </form>
 </div>
 {% endfor %}
 </div>
